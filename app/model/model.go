@@ -19,7 +19,7 @@ type Player struct { // player model
 	Status   bool   `json:"status"`
 	Name     string `json:"name"`
 	Position string `json:"position"`
-	Club     Club   `gorm:"foreignkey:ClubId"` // use ClubId as foreign key
+	Club     Club   `gorm:"foreignkey:ClubID"` // use ClubID as foreign key
 	ClubID   uint   `json:"clubID"`
 }
 
