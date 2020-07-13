@@ -35,6 +35,7 @@ func (a *App) Initialize(config *config.Config) {
 	}
 
 	a.DB = model.DBMigrate(db)
+	//model.Seed(db)
 	a.Router = mux.NewRouter()
 	a.setRouters()
 }
@@ -43,12 +44,20 @@ func (a *App) Initialize(config *config.Config) {
 func (a *App) setRouters() {
 	// Routing for handling the projects
 	a.Get("/clubs", a.GetAllClubs)
-	a.Post("/clubs", a.CreateClub)
-	a.Get("/clubs/{name}", a.GetClub)
-	a.Put("/clubs/{name}", a.UpdateClub)
-	a.Delete("/clubs/{name}", a.DeleteClub)
-	a.Put("/clubs/{name}/disable", a.DisableClub)
-	a.Put("/clubs/{name}/enable", a.EnableClub)
+	a.Post("/club", a.CreateClub)
+	a.Get("/club/{name}", a.GetClub)
+	a.Put("/club/{name}", a.UpdateClub)
+	a.Delete("/club/{name}", a.DeleteClub)
+	a.Put("/club/{name}/disable", a.DisableClub)
+	a.Put("/club/{name}/enable", a.EnableClub)
+
+	a.Get("/players", a.GetAllPlayers)
+	a.Post("/player", a.CreatePlayer)
+	a.Get("/player/{name}", a.GetPlayer)
+	a.Put("/player/{name}", a.UpdatePlayer)
+	a.Delete("/player/{name}", a.DeletePlayer)
+	a.Put("/player/{name}/disable", a.DisablePlayer)
+	a.Put("/player/{name}/enable", a.EnablePlayer)
 }
 
 // Get : Wrap the router for GET method
@@ -104,6 +113,41 @@ func (a *App) DisableClub(w http.ResponseWriter, r *http.Request) {
 // EnableClub : Handlers
 func (a *App) EnableClub(w http.ResponseWriter, r *http.Request) {
 	handler.EnableClub(a.DB, w, r)
+}
+
+// GetAllPlayers : Handlers
+func (a *App) GetAllPlayers(w http.ResponseWriter, r *http.Request) {
+	handler.GetAllPlayers(a.DB, w, r)
+}
+
+// CreatePlayer : Handlers
+func (a *App) CreatePlayer(w http.ResponseWriter, r *http.Request) {
+	handler.CreatePlayer(a.DB, w, r)
+}
+
+// GetPlayer : Handlers
+func (a *App) GetPlayer(w http.ResponseWriter, r *http.Request) {
+	handler.GetPlayer(a.DB, w, r)
+}
+
+// UpdatePlayer : Handlers
+func (a *App) UpdatePlayer(w http.ResponseWriter, r *http.Request) {
+	handler.UpdatePlayer(a.DB, w, r)
+}
+
+// DeletePlayer : Handlers
+func (a *App) DeletePlayer(w http.ResponseWriter, r *http.Request) {
+	handler.DeletePlayer(a.DB, w, r)
+}
+
+// DisablePlayer : Handlers
+func (a *App) DisablePlayer(w http.ResponseWriter, r *http.Request) {
+	handler.DisablePlayer(a.DB, w, r)
+}
+
+// EnablePlayer : Handlers
+func (a *App) EnablePlayer(w http.ResponseWriter, r *http.Request) {
+	handler.EnablePlayer(a.DB, w, r)
 }
 
 // Run the app

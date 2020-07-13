@@ -43,10 +43,32 @@ func (p *Player) Enable() {
 	p.Status = true
 }
 
-// DBMigrate will create and migrate the tables, and then make the some relationships if necessary
+// DBMigrate will create and migrate the tables. AutoMigrate will ONLY create tables, missing columns and missing indexes, and WON’T change existing column’s type or delete unused columns.
 func DBMigrate(db *gorm.DB) *gorm.DB {
 	db.AutoMigrate(&Club{})
 	db.AutoMigrate(&Player{})
 	db.Model(&Player{}).AddForeignKey("club_id", "clubs(id)", "RESTRICT", "RESTRICT")
 	return db
+}
+
+// Seed first data
+func Seed(db *gorm.DB) {
+	club1 := &Club{
+		Status: true,
+		Name:   "Liverpool",
+		League: "Premier League",
+	}
+	club2 := &Club{
+		Status: true,
+		Name:   "Barcelona",
+		League: "LA Liga",
+	}
+	club3 := &Club{
+		Status: true,
+		Name:   "AS Roma",
+		League: "Serie A",
+	}
+	db.Save(club1)
+	db.Save(club2)
+	db.Save(club3)
 }
