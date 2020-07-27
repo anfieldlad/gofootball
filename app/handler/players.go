@@ -123,9 +123,15 @@ func EnablePlayer(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 // getPlayerOr404 gets a player instance if exists, or respond the 404 error otherwise
 func getPlayerOr404(db *gorm.DB, name string, w http.ResponseWriter, r *http.Request) *model.Player {
 	player := model.Player{}
+	club := model.Club{}
 	if err := db.First(&player, model.Player{Name: name}).Error; err != nil {
 		respondError(w, http.StatusNotFound, err.Error())
 		return nil
 	}
+	if err := db.Where("id = ?", player.ClubID).First(&club).Error; err != nil {
+		respondError(w, http.StatusNotFound, err.Error())
+		return nil
+	}
+	player.Club = club
 	return &player
 }
