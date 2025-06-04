@@ -1,11 +1,11 @@
 package config
 
-//Config struct
+// Config struct
 type Config struct {
 	DB *DBConfig
 }
 
-//DBConfig struct
+// DBConfig struct
 type DBConfig struct {
 	Dialect  string
 	Server   string
@@ -16,7 +16,7 @@ type DBConfig struct {
 	Charset  string
 }
 
-//GetConfig function
+// GetConfig function
 func GetConfig() *Config {
 	return &Config{
 		DB: &DBConfig{
